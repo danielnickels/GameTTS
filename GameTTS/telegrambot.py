@@ -10,6 +10,7 @@ from telegram import Update
 from telegram.ext import CallbackContext
 from telegram.ext import CommandHandler
 import sys
+import os
 
 try:
     from vits.synthesizer import Synthesizer
@@ -53,6 +54,7 @@ def echo(update: Update, context: CallbackContext):
     params = {"speech_var_a": 0.3, "speech_var_b": 0.5, "speech_speed": 1.3}
     audiopath = synthesize(update.message.text, speaker, "nameloser_held",params)
     context.bot.send_audio(chat_id=update.effective_chat.id, audio=open(audiopath, 'rb'))
+    os.remove(audiopath)
 
 # start telegram bot
 if __name__ == "__main__":
